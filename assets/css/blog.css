@@ -1,0 +1,459 @@
+/*
+ * blog.css
+ * Blog-only additions. johnjheisler.css is shared with the main site
+ * and is intentionally left untouched.
+ */
+
+/* ═══════════════════════════════════════════
+   SYNTAX COLORS (VS Code-style palette)
+   ═══════════════════════════════════════════ */
+
+[data-theme="dark"] {
+  --syn-comment: #6a9955;
+  --syn-keyword: #569cd6;
+  --syn-string:  #ce9178;
+  --syn-var:     #9cdcfe;
+  --syn-func:    #dcdcaa;
+  --syn-param:   #4ec9b0;
+  --syn-number:  #b5cea8;
+}
+
+[data-theme="light"] {
+  --syn-comment: #008000;
+  --syn-keyword: #0451a5;
+  --syn-string:  #a31515;
+  --syn-var:     #001080;
+  --syn-func:    #795e26;
+  --syn-param:   #267f99;
+  --syn-number:  #098658;
+}
+
+
+/* ═══════════════════════════════════════════
+   GLOBAL ADDITIONS
+   ═══════════════════════════════════════════ */
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 8px;
+  z-index: 100;
+  background: var(--bg-surface);
+  color: var(--accent);
+  border: 1px solid var(--accent-border);
+  padding: 8px 14px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  text-decoration: none;
+}
+
+.skip-link:focus { left: 16px; }
+
+.section-label { scroll-margin-top: 24px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+
+/* ═══════════════════════════════════════════
+   HEADER NAV
+   ═══════════════════════════════════════════ */
+
+a.logo-mark { text-decoration: none; }
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.site-nav {
+  display: flex;
+  gap: 20px;
+}
+
+.site-nav a {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+.site-nav a:hover,
+.site-nav a[aria-current="page"] {
+  color: var(--accent);
+}
+
+
+/* ═══════════════════════════════════════════
+   HERO VARIANTS
+   ═══════════════════════════════════════════ */
+
+/* "PowerShell Blog" is longer than "John Heisler", so scale it down a bit */
+.hero-blog .header-text {
+  font-size: clamp(2.4rem, 10vw, 80px);
+}
+
+.hero-post { margin-bottom: 40px; }
+
+.post-title {
+  font-size: clamp(2rem, 6vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.hero-post .hero-meta { margin-top: 16px; }
+.hero-post .subtitle { margin-bottom: 0; }
+
+a.badge-transparent {
+  text-decoration: none;
+  transition: border-color var(--transition), background var(--transition);
+}
+
+a.badge-transparent:hover {
+  border-color: var(--accent);
+  background: var(--accent-glow);
+}
+
+
+/* ═══════════════════════════════════════════
+   POST LISTS
+   ═══════════════════════════════════════════ */
+
+.post-tags {
+  grid-column: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.04em;
+}
+
+.post-tags a {
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+.post-tags a:hover { color: var(--accent); }
+
+.more-link {
+  display: inline-block;
+  margin-top: 20px;
+  padding-top: 16px;
+  width: 100%;
+  border-top: 1px solid var(--border-strong);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.more-link:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+.empty-state {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+
+/* ═══════════════════════════════════════════
+   POST CONTENT
+   ═══════════════════════════════════════════ */
+
+.post-content {
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--text-primary);
+  overflow-wrap: break-word;
+}
+
+/* Vertical rhythm (the shared reset zeroes all margins) */
+.post-content > * + * { margin-top: 16px; }
+
+.post-content p {
+  font-weight: 400;
+  color: var(--text-primary);
+  margin-bottom: 0;
+}
+
+.post-content h2 {
+  margin-top: 44px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--text-primary);
+}
+
+.post-content h2::before {
+  content: '// ';
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.post-content h3 {
+  margin-top: 32px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.post-content h4 {
+  margin-top: 24px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+}
+
+.post-content > h2:first-child,
+.post-content > h3:first-child { margin-top: 0; }
+
+.post-content a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-color: var(--accent-border);
+  text-underline-offset: 3px;
+  transition: text-decoration-color var(--transition);
+}
+
+.post-content a:hover { text-decoration-color: var(--accent); }
+
+.post-content strong { font-weight: 500; }
+
+.post-content ul,
+.post-content ol { padding-left: 22px; }
+
+.post-content li { margin-top: 6px; }
+.post-content li::marker { color: var(--text-muted); }
+
+.post-content blockquote {
+  border-left: 2px solid var(--accent-border);
+  padding-left: 16px;
+  color: var(--text-secondary);
+}
+
+.post-content hr {
+  border: 0;
+  border-top: 1px solid var(--border-strong);
+  margin: 32px 0;
+}
+
+.post-content img {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid var(--border-strong);
+}
+
+/* Tables scroll sideways on small screens instead of breaking the layout */
+.post-content table {
+  display: block;
+  overflow-x: auto;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.post-content th,
+.post-content td {
+  padding: 8px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-strong);
+}
+
+.post-content th {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.post-content td { color: var(--text-secondary); }
+.post-content td code { white-space: nowrap; }
+
+
+/* ═══════════════════════════════════════════
+   CODE
+   ═══════════════════════════════════════════ */
+
+/* Inline code */
+.post-content :not(pre) > code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.88em;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  padding: 1px 6px;
+}
+
+/* Fenced code blocks (kramdown wraps these in .highlighter-rouge) */
+.post-content div.highlighter-rouge {
+  margin: 20px 0;
+  background: var(--bg);
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.post-content div.highlight,
+.post-content pre.highlight {
+  margin: 0;
+  background: transparent;
+}
+
+.post-content pre {
+  margin: 0;
+  padding: 16px 18px;
+  overflow-x: auto;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--text-primary);
+  tab-size: 4;
+}
+
+.post-content pre code {
+  font-family: inherit;
+  font-size: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+}
+
+/* Indented (non-fenced) code blocks */
+.post-content > pre {
+  margin: 20px 0;
+  background: var(--bg);
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+}
+
+/* Header bar with language label + copy button (added by site.js) */
+.code-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 8px 6px 18px;
+  background: var(--bg-elevated);
+  border-bottom: 1px solid var(--border);
+}
+
+.code-lang {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
+}
+
+.code-copy {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+  background: transparent;
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  padding: 2px 10px;
+  cursor: pointer;
+  transition: color var(--transition), border-color var(--transition);
+}
+
+.code-copy:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+/* Rouge token colors */
+.highlight .c,  .highlight .c1, .highlight .cm,
+.highlight .cp, .highlight .cs, .highlight .cd { color: var(--syn-comment); font-style: italic; }
+
+.highlight .k,  .highlight .kd, .highlight .kn, .highlight .kp,
+.highlight .kr, .highlight .kt, .highlight .kc, .highlight .ow { color: var(--syn-keyword); }
+
+/* Rouge tags PowerShell cmdlets as .n and builtins like $_ as .bp */
+.highlight .n,  .highlight .nb, .highlight .bp,
+.highlight .nf, .highlight .fm { color: var(--syn-func); }
+
+.highlight .nv, .highlight .vi, .highlight .vg,
+.highlight .vc, .highlight .vm { color: var(--syn-var); }
+
+/* Rouge tags PowerShell -Parameters as .nt */
+.highlight .nt, .highlight .na, .highlight .no, .highlight .nd,
+.highlight .nl, .highlight .nn { color: var(--syn-param); }
+
+.highlight .s,  .highlight .s1, .highlight .s2, .highlight .sb,
+.highlight .sc, .highlight .sd, .highlight .se, .highlight .sh,
+.highlight .si, .highlight .sx, .highlight .sr, .highlight .ss,
+.highlight .dl { color: var(--syn-string); }
+
+.highlight .m,  .highlight .mi, .highlight .mf, .highlight .mh,
+.highlight .mo, .highlight .il { color: var(--syn-number); }
+
+.highlight .o,  .highlight .p,  .highlight .pi { color: var(--text-secondary); }
+
+/* Rouge flags anything it can't lex as an error; don't paint it red */
+.highlight .err { color: inherit; background: none; }
+
+
+/* ═══════════════════════════════════════════
+   POST NAV + FOOTER LINKS
+   ═══════════════════════════════════════════ */
+
+.post-nav .link-platform { width: 70px; }
+
+footer a {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+footer a:hover { color: var(--accent); }
+
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════ */
+
+@media (max-width: 560px) {
+  header {
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .header-right {
+    width: 100%;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .site-nav { gap: 16px; }
+
+  .post-content pre { padding: 14px; font-size: 12px; }
+
+  .hero-post { margin-bottom: 28px; }
+}

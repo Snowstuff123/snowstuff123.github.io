@@ -1,0 +1,57 @@
+---
+layout: default
+---
+<article>
+  <div class="hero hero-post">
+    <h1 class="post-title">{{ page.title }}</h1>
+    <div class="hero-meta">
+      {% assign words = content | number_of_words %}
+      <div class="subtitle">
+        <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%b %-d, %Y" }}</time>
+        <span class="a-span">&nbsp;//&nbsp;</span>{{ words | divided_by: 200 | plus: 1 }} min read
+      </div>
+      {% for tag in page.tags %}
+      <a class="badge-transparent" href="{{ '/tags/' | relative_url }}#{{ tag | slugify }}">{{ tag }}</a>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="sections-stack">
+    <div class="section">
+      <div class="post-content">
+        {{ content }}
+      </div>
+    </div>
+
+    {% if page.script_url %}
+    <div class="contact-section">
+      <div>
+        <div class="contact-label">Script</div>
+        <div class="contact-desc">{{ page.script_desc | default: "The full script, kept up to date on GitHub." }}</div>
+      </div>
+      <a href="{{ page.script_url }}" class="contact-btn" target="_blank" rel="noopener">View on GitHub</a>
+    </div>
+    {% endif %}
+
+    {% if page.previous or page.next %}
+    <div class="section">
+      <nav class="links-grid post-nav" aria-label="More posts">
+        {% if page.next %}
+        <a class="link-row" href="{{ page.next.url | relative_url }}">
+          <span class="link-platform">Newer</span>
+          <span class="link-handle">{{ page.next.title }}</span>
+          <span class="link-arrow">→</span>
+        </a>
+        {% endif %}
+        {% if page.previous %}
+        <a class="link-row" href="{{ page.previous.url | relative_url }}">
+          <span class="link-platform">Older</span>
+          <span class="link-handle">{{ page.previous.title }}</span>
+          <span class="link-arrow">→</span>
+        </a>
+        {% endif %}
+      </nav>
+    </div>
+    {% endif %}
+  </div>
+</article>

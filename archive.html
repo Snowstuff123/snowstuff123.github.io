@@ -1,0 +1,22 @@
+---
+layout: default
+title: Archive
+permalink: /archive/
+---
+<div class="hero hero-post">
+  <h1 class="post-title">Archive</h1>
+</div>
+
+<div class="sections-stack">
+  {% assign by_year = site.posts | group_by_exp: "p", "p.date | date: '%Y'" %}
+  {% for year in by_year %}
+  <div class="section">
+    <div class="section-label">{{ year.name }}</div>
+    {% include post-list.html posts=year.items %}
+  </div>
+  {% else %}
+  <div class="section">
+    <p class="empty-state">No posts yet.</p>
+  </div>
+  {% endfor %}
+</div>

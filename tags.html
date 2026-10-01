@@ -1,0 +1,31 @@
+---
+layout: default
+title: Tags
+permalink: /tags/
+---
+<div class="hero hero-post">
+  <h1 class="post-title">Tags</h1>
+</div>
+
+{% assign sorted_tags = site.tags | sort %}
+{% if sorted_tags.size > 0 %}
+<div class="tag-list">
+  {% for tag in sorted_tags %}
+  <a class="badge-transparent" href="#{{ tag[0] | slugify }}">{{ tag[0] }} · {{ tag[1].size }}</a>
+  {% endfor %}
+</div>
+
+<div class="sections-stack">
+  {% for tag in sorted_tags %}
+  {% assign tag_posts = tag[1] %}
+  <div class="section">
+    <div class="section-label" id="{{ tag[0] | slugify }}">{{ tag[0] }}</div>
+    {% include post-list.html posts=tag_posts %}
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<div class="section">
+  <p class="empty-state">No tags yet. Add <code>tags: [powershell]</code> to a post's front matter.</p>
+</div>
+{% endif %}

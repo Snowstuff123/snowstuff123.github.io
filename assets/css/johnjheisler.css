@@ -1,0 +1,746 @@
+/*
+ * johnjheisler.css
+ * Common styles for johnjheisler.com properties
+ * ─────────────────────────────────────────────
+ * Required font link (add to every page's <head>):
+ *
+ *   <link rel="preconnect" href="https://fonts.googleapis.com">
+ *   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+ *   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+ */
+
+
+/* ═══════════════════════════════════════════
+   CSS VARIABLES
+   ═══════════════════════════════════════════ */
+
+:root {
+  --accent:       #0078D4;
+  --accent-dim:   #005a9e;
+  --accent-glow:  rgba(0, 120, 212, 0.15);
+  --accent-border:rgba(0, 120, 212, 0.3);
+  --transition:   0.2s ease;
+}
+
+[data-theme="dark"] {
+  --bg:            #0e0e0f;
+  --bg-surface:    #161618;
+  --bg-elevated:   #1e1e21;
+  --bg-acrylic:    rgba(14, 14, 15, 0.50);
+  --border:        rgba(255, 255, 255, 0.07);
+  --border-strong: rgba(255, 255, 255, 0.14);
+  --text-primary:  #e8e8e8;
+  --text-secondary:#888890;
+  --text-muted:    #6e6e79;
+  --callsign-color:#ffffff;
+}
+
+[data-theme="light"] {
+  --bg:            #f5f5f3;
+  --bg-surface:    #ffffff;
+  --bg-elevated:   #efefed;
+  --bg-acrylic:    rgba(245, 245, 243, 0.50);
+  --border:        rgba(0, 0, 0, 0.07);
+  --border-strong: rgba(0, 0, 0, 0.14);
+  --text-primary:  #1a1a1e;
+  --text-secondary:#5a5a66;
+  --text-muted:    #aaaaB4;
+  --callsign-color:#0e0e0f;
+}
+
+
+/* ═══════════════════════════════════════════
+   RESET
+   ═══════════════════════════════════════════ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+
+/* ═══════════════════════════════════════════
+   BODY
+   ═══════════════════════════════════════════ */
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text-primary);
+  font-size: 14px;
+  line-height: 1.7;
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition: background var(--transition), color var(--transition);
+}
+
+/* Grid background */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Background Vector */
+/* https://codepen.io/sosuke/pen/Pjoqqp */
+[data-theme="dark"] .bg-vector img {
+  filter: invert(44%) sepia(7%) saturate(498%) hue-rotate(201deg) brightness(95%) contrast(90%); /* --text-muted */
+}
+
+[data-theme="light"] .bg-vector img {
+  filter: invert(77%) sepia(7%) saturate(260%) hue-rotate(202deg) brightness(89%) contrast(87%); /* --text-muted */
+}
+
+.bg-vector {
+  position: fixed;
+  top: 10%;
+  left: 50%;
+  transform: translate(0%, 0%);
+  z-index: -1;
+  opacity: .2;     /* subtle — tweak between 0.03–0.08 */
+  pointer-events: none;
+  width: 600px;
+  max-width: 90vw;
+}
+
+.bg-vector img {
+  width: 100%;
+  filter: invert(1); /* add invert(1) if you need it to flip for light mode */
+}
+
+
+
+/* ═══════════════════════════════════════════
+   PAGE WRAPPER
+   ═══════════════════════════════════════════ */
+
+.page {
+  position: relative;
+  z-index: 1;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 0 24px 80px;
+}
+
+/* ═══════════════════════════════════════════
+   SECTON LAYOUTS
+   ═══════════════════════════════════════════ */
+/* ── Section stack ── */
+.sections-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 2px;
+}
+
+/* ── Section grid ── */
+.sections-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  margin-bottom: 2px;
+}
+
+.section.full-width {
+  grid-column: 1 / -1;
+}
+
+/* ═══════════════════════════════════════════
+   HEADER
+   ═══════════════════════════════════════════ */
+
+.hero {
+  margin-bottom: 72px;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 28px 0 0;
+  margin-bottom: 72px;
+}
+
+.header-text {
+  font-size: clamp(3rem, 14vw, 100px); /*2.4rem, 6vw, 4rem)*/
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin-bottom: 10px;
+}
+
+.header-text .prefix {
+    color: var(--text-muted);
+    font-weight: 300;
+  }
+
+.header-text .suffix {
+    color: var(--accent);
+}
+
+/* Site/page identifier in the top-left */
+.logo-mark {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.logo-mark span {
+  color: var(--accent);
+}
+
+.subtitle {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--text-secondary);
+  letter-spacing: 0.08em;
+  margin-bottom: 4px;
+}
+
+.subtitle .a-span {
+  color: var(--accent);
+}
+
+.subheading {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 22px;
+  font-weight: 300;
+  color: var(--text-secondary);
+  letter-spacing: -0.01em;
+}
+
+.hero-meta {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+/* ═══════════════════════════════════════════
+   THEME TOGGLE
+   ═══════════════════════════════════════════ */
+
+.theme-toggle {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  cursor: pointer;
+  padding: 7px 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: background var(--transition), border-color var(--transition);
+}
+
+.theme-toggle:hover {
+  border-color: var(--accent);
+  background: var(--bg-elevated);
+}
+
+.theme-toggle svg {
+  width: 15px;
+  height: 15px;
+  stroke: var(--text-secondary);
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: stroke var(--transition);
+}
+
+.theme-toggle:hover svg { stroke: var(--accent); }
+
+.toggle-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--text-secondary);
+  letter-spacing: 0.05em;
+}
+
+
+/* ═══════════════════════════════════════════
+   SECTION CARD
+   ═══════════════════════════════════════════ */
+
+.section {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  padding: 28px 32px;
+  transition: background var(--transition), border-color var(--transition);
+}
+
+.section:hover {
+  border-color: var(--border-strong);
+}
+
+/* Section label — CSS adds the // prefix automatically */
+.section-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+
+.section-label::before {
+  content: '// ';
+}
+
+
+/* ═══════════════════════════════════════════
+   BODY TEXT
+   ═══════════════════════════════════════════ */
+
+p {
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+}
+
+p:last-child { margin-bottom: 0; }
+
+
+/* ═══════════════════════════════════════════
+   BADGES
+   ═══════════════════════════════════════════ */
+
+/* Accent color with glowing fill — use for classifications, license class, status labels */
+.badge-glow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: var(--accent-glow);
+  border: 1px solid var(--accent-border);
+  border-radius: 4px;
+  padding: 4px 10px;
+  display: inline-block;
+}
+
+/* Outline only, no fill — use for locations, secondary labels */
+.badge-transparent {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: var(--bg-acrylic);
+  border: 1px solid var(--accent-border);
+  border-radius: 4px;
+  padding: 4px 10px;
+  display: inline-block;
+}
+
+/* ═══════════════════════════════════════════
+   OTHER ELEMENT DEFINITIONS
+   ═══════════════════════════════════════════ */
+  
+   .divider-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--text-muted);
+    flex-shrink: 0;
+  }
+
+/* ═══════════════════════════════════════════
+   STATUS ROW
+   ═══════════════════════════════════════════ */
+
+.status-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
+  animation: pulse 2.5s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+.status-text {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+
+
+/* ═══════════════════════════════════════════
+   LIST TYPES
+   ═══════════════════════════════════════════
+
+   Three reusable list patterns. All work inside
+   a .section card or standalone.
+
+   ═══════════════════════════════════════════ */
+
+
+/* ── .list-regular ──────────────────────────
+ *
+ * Short label + value pairs, stacked vertically.
+ * Good for: equipment, specs, tools, attributes.
+ *
+ * Markup:
+ *   <ul class="list-regular">
+ *     <li class="list-regular-item">
+ *       <span class="item-label">Handheld</span>
+ *       <span class="item-value">Baofeng UV-5R</span>
+ *     </li>
+ *   </ul>
+ * ─────────────────────────────────────────── */
+
+.list-regular {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.list-regular-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.list-regular-item .item-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  min-width: 72px;
+  padding-top: 2px;
+  flex-shrink: 0;
+}
+
+.list-regular-item .item-value {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text-primary);
+  line-height: 1.4;
+}
+
+
+/* ── .list-segmented ────────────────────────
+ *
+ * Key / value rows separated by bottom borders.
+ * Good for: license details, metadata, records.
+ *
+ * Markup:
+ *   <div class="list-segmented">
+ *     <div class="list-segmented-row">
+ *       <span class="row-key">Callsign</span>
+ *       <span class="row-value">KN2JJH</span>
+ *     </div>
+ *   </div>
+ * ─────────────────────────────────────────── */
+
+.list-segmented {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.list-segmented-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.list-segmented-row:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.list-segmented-row .row-key {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.list-segmented-row .row-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+
+/* ── .list-content ──────────────────────────
+ *
+ * Named items with description and optional tag.
+ * Two-column grid: name+desc on left, tag on right.
+ * Good for: projects, links, portfolio items.
+ *
+ * Markup:
+ *   <div class="list-content">
+ *     <div class="list-content-item">
+ *       <div class="content-name"><a href="#">Project Name</a></div>
+ *       <span class="content-tag">tag</span>        ← optional
+ *       <div class="content-desc">Description.</div>
+ *     </div>
+ *   </div>
+ * ─────────────────────────────────────────── */
+
+.list-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.list-content-item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: start;
+  gap: 8px 24px;
+  padding: 16px 0;
+  border-top: 1px solid var(--border-strong);
+}
+
+.list-content-item:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+
+.content-name {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.content-name a {
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+.content-name a:hover { color: var(--accent); }
+
+.content-desc {
+  font-size: 12px;
+  color: var(--text-secondary);
+  grid-column: 1;
+}
+
+.content-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--text-muted);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-strong);
+  padding: 2px 10px;
+  white-space: nowrap;
+  align-self: start;
+  border-radius: 6px;
+}
+
+
+/* ═══════════════════════════════════════════
+   SOCIAL LINKS
+   ═══════════════════════════════════════════ */
+
+/*
+ * Markup:
+ *   <div class="links-grid">
+ *     <a class="link-row" href="#" target="_blank" rel="noopener">
+ *       <span class="link-platform">YouTube</span>
+ *       <span class="link-handle">@handle</span>
+ *       <span class="link-arrow">↗</span>
+ *     </a>
+ *   </div>
+ */
+
+.links-grid {
+  display: flex;
+  flex-direction: column;
+}
+
+.link-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 0;
+  border-top: 1px solid var(--border-strong);
+  text-decoration: none;
+  color: var(--text-primary);
+  font-size: 13px;
+  transition: color var(--transition);
+}
+
+.link-row:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+
+.link-row:hover { color: var(--accent); }
+.link-row:hover .link-arrow { color: var(--accent); }
+
+.link-platform {
+  font-family: 'JetBrains Mono', monospace;
+  width: 110px;
+  flex-shrink: 0;
+  color: var(--text-secondary);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+}
+
+.link-handle { flex: 1; }
+
+.link-arrow {
+  color: var(--text-muted);
+  font-size: 11px;
+  transition: color var(--transition);
+}
+
+
+/* ═══════════════════════════════════════════
+   CONTACT SECTION
+   ═══════════════════════════════════════════ */
+
+.contact-section {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  padding: 28px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  transition: background var(--transition), border-color var(--transition);
+}
+
+.contact-section:hover {
+  border-color: var(--border-strong);
+}
+
+.contact-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+
+.contact-label::before {
+  content: '// ';
+}
+
+.contact-desc {
+  font-size: 14px;
+  color: var(--text-secondary);
+  font-weight: 300;
+}
+
+.contact-btn {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--accent);
+  background: var(--accent-glow);
+  border: 1px solid var(--accent-border);
+  border-radius: 6px;
+  padding: 10px 20px;
+  text-decoration: none;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  justify-content: space-between;
+  transition: background var(--transition), border-color var(--transition), color var(--transition);
+}
+
+.contact-btn:hover {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+
+/* ═══════════════════════════════════════════
+   FOOTER
+   ═══════════════════════════════════════════ */
+
+footer {
+  margin-top: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.footer-left,
+.footer-right {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+}
+
+.footer-left strong,
+.footer-right strong {
+  color: var(--accent);
+  font-weight: 500;
+}
+
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════ */
+
+@media (max-width: 560px) {
+  .page {
+    padding: 0 16px 60px;
+  }
+
+  header {
+    margin-bottom: 48px;
+  }
+
+  .section {
+    padding: 22px 20px;
+  }
+
+  .sections-grid {
+    grid-template-columns: 1fr;
+  }
+  .contact-section {
+    padding: 22px 20px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
