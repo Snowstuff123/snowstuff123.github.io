@@ -109,6 +109,7 @@ a.logo-mark { text-decoration: none; }
 .hero-post { margin-bottom: 40px; }
 
 .post-title {
+  color: var(--accent);
   font-size: clamp(2rem, 6vw, 3rem);
   font-weight: 700;
   letter-spacing: -0.02em;
