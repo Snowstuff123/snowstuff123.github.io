@@ -5,6 +5,7 @@ date: 2026-10-01
 description: "Sets an Active Directory user account expiration date."
 tags: [powershell, activedirectory, function, github]
 script_url: https://github.com/Snowstuff123/Powershell-Scripts/blob/main/Set-UserExpiration/Set-UserExpiration.ps1
+script_desc: "Set-UserExpiration.ps1 on GitHub, with the latest version."
 ---
 ## Overview
 Sets an Active Directory user account expiration date.
