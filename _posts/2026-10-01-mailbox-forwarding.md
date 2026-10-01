@@ -10,7 +10,7 @@ Use this when you need to a list of all mailboxes forwarding to a specified mail
 
 ## The script
 
-```PowerShell
+```powershell
 RecipientCN = (Get-Recipient johndoe).Identity
 Get-Mailbox -ResultSize:Unlimited -Filter:{ForwardingAddress -ne $null} | Where-Object {$_.ForwardingAddress -eq $RecipientCN}
 ```
